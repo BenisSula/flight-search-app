@@ -9,7 +9,39 @@ import { useAppStatus } from '../../context/AppStatusContext'
  */
 function Navbar() {
   const location = useLocation()
-  const { isHealthy } = useAppStatus()
+  const { connectionStatus } = useAppStatus()
+
+  // Determine status label and style based on connection status
+  const getStatusInfo = () => {
+    if (connectionStatus === 'online') {
+      return {
+        icon: Wifi,
+        label: 'Online',
+        className: 'text-green-700 dark:text-green-300',
+        iconClassName: 'text-green-600 dark:text-green-400',
+        message: 'Connected to RapidAPI',
+      }
+    } else if (connectionStatus === 'mock') {
+      return {
+        icon: Wifi,
+        label: 'Mock',
+        className: 'text-yellow-700 dark:text-yellow-300',
+        iconClassName: 'text-yellow-600 dark:text-yellow-400',
+        message: 'Using mock data temporarily',
+      }
+    } else {
+      return {
+        icon: WifiOff,
+        label: 'Offline',
+        className: 'text-red-700 dark:text-red-300',
+        iconClassName: 'text-red-600 dark:text-red-400',
+        message: 'API unavailable - using mock data',
+      }
+    }
+  }
+
+  const statusInfo = getStatusInfo()
+  const StatusIcon = statusInfo.icon
 
   return (
     <header
@@ -38,32 +70,29 @@ function Navbar() {
               </span>
             </Link>
 
-            {/* Health Indicator */}
+            {/* Health Indicator with Tooltip */}
             <div
-              className="flex items-center gap-1.5 px-2 py-1 rounded-full text-xs font-medium transition-all"
+              className="group relative flex items-center gap-1.5 px-2 py-1 rounded-full text-xs font-medium transition-all cursor-help"
               role="status"
               aria-live="polite"
-              aria-label={`Server status: ${isHealthy ? 'Online' : 'Offline'}`}
+              aria-label={`Connection status: ${statusInfo.label}`}
+              title={statusInfo.message}
             >
-              {isHealthy ? (
-                <>
-                  <Wifi
-                    className="h-3.5 w-3.5 text-green-600 dark:text-green-400"
-                    aria-hidden="true"
-                  />
-                  <span className="hidden sm:inline text-green-700 dark:text-green-300">
-                    Online
-                  </span>
-                </>
-              ) : (
-                <>
-                  <WifiOff
-                    className="h-3.5 w-3.5 text-red-600 dark:text-red-400"
-                    aria-hidden="true"
-                  />
-                  <span className="hidden sm:inline text-red-700 dark:text-red-300">Offline</span>
-                </>
-              )}
+              <StatusIcon
+                className={`h-3.5 w-3.5 ${statusInfo.iconClassName}`}
+                aria-hidden="true"
+              />
+              <span className={`hidden sm:inline ${statusInfo.className}`}>
+                {statusInfo.label}
+              </span>
+              
+              {/* Tooltip */}
+              <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-2 bg-gray-900 dark:bg-gray-700 text-white text-xs rounded-lg opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity duration-200 whitespace-nowrap z-50">
+                {statusInfo.message}
+                <div className="absolute top-full left-1/2 transform -translate-x-1/2 -mt-1">
+                  <div className="border-4 border-transparent border-t-gray-900 dark:border-t-gray-700"></div>
+                </div>
+              </div>
             </div>
           </div>
 

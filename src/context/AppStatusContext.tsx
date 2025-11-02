@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useEffect, useCallback } from 'react'
 import type { ReactNode } from 'react'
-import { checkServer } from '../services/flightApi'
+import { checkApiHealth, type ApiConnectionStatus } from '../utils/apiStatus'
 import type { HealthStatus, ServerConfig } from '../types/flight'
 import { logger } from '../utils/logger'
 
@@ -8,6 +8,7 @@ interface AppStatusContextType {
   // Health status
   health: HealthStatus
   isHealthy: boolean
+  connectionStatus: ApiConnectionStatus
 
   // Server config
   config: ServerConfig | null
@@ -31,12 +32,27 @@ export function AppStatusProvider({ children }: { children: ReactNode }) {
     timestamp: Date.now(),
     message: 'Checking server status...',
   })
+  const [connectionStatus, setConnectionStatus] = useState<ApiConnectionStatus>('offline')
   const [config, setConfig] = useState<ServerConfig | null>(null)
 
-  // Refresh health status
+  // Refresh health status using new centralized health check
   const refreshHealth = useCallback(async () => {
-    const status = await checkServer()
-    setHealth(status)
+    const result = await checkApiHealth()
+    
+    // Map ApiConnectionStatus to HealthStatus
+    const healthStatus: HealthStatus = {
+      isOnline: result.status === 'online' || result.status === 'mock',
+      timestamp: result.timestamp,
+      message: result.message,
+    }
+    
+    setHealth(healthStatus)
+    setConnectionStatus(result.status)
+    
+    logger.debug('AppStatusProvider', 'Health check completed', {
+      status: result.status,
+      message: result.message,
+    })
   }, [])
 
   // Refresh server configuration
@@ -51,47 +67,21 @@ export function AppStatusProvider({ children }: { children: ReactNode }) {
 
   // Initial health check on mount
   useEffect(() => {
-    // In development, skip health checks and assume online
+    // In development, skip health checks and assume online with mock data
     // This prevents hitting rate limits during development
-    // In production, perform health checks to monitor API connectivity
     if (!import.meta.env.PROD) {
-      // Development mode: assume online
       setHealth({
         isOnline: true,
         timestamp: Date.now(),
-        message: 'Development mode - health checks disabled',
+        message: 'Development mode - using mock data',
       })
+      setConnectionStatus('mock')
       return
     }
 
-    // Production mode: run health checks
-    // Run regular health check (will handle rate limits gracefully)
+    // Production mode: perform initial health check with caching
+    // Cache prevents multiple API calls on hot reloads or re-renders
     refreshHealth()
-
-    // Set up periodic health checks every 30 minutes (increased to avoid rate limits)
-    // Skip if already offline due to rate limit
-    const interval = setInterval(
-      () => {
-        // Only check if not offline due to rate limit
-        setHealth(currentHealth => {
-          if (
-            currentHealth.isOnline === false &&
-            currentHealth.message &&
-            (currentHealth.message.includes('Rate limit exceeded') ||
-              currentHealth.message.includes('429'))
-          ) {
-            // Don't check again if rate limited - wait until next hour/reset
-            // Skip this check completely to avoid hitting rate limits again
-            return currentHealth
-          }
-          refreshHealth()
-          return currentHealth
-        })
-      },
-      30 * 60 * 1000
-    ) // 30 minutes (increased from 10 to significantly reduce API calls)
-
-    return () => clearInterval(interval)
   }, [refreshHealth])
 
   // Initial config fetch
@@ -102,6 +92,7 @@ export function AppStatusProvider({ children }: { children: ReactNode }) {
   const value: AppStatusContextType = {
     health,
     isHealthy: health.isOnline,
+    connectionStatus,
     config,
     refreshHealth,
     refreshConfig,
@@ -122,6 +113,7 @@ function getDefaultContextValue(): AppStatusContextType {
       message: 'Initializing...',
     },
     isHealthy: true,
+    connectionStatus: 'mock',
     config: null,
     refreshHealth: async () => {},
     refreshConfig: async () => {},
