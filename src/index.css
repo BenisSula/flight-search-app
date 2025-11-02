@@ -1,0 +1,54 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary-blue: #4285f4;
+  --accent-yellow: #fbbc05;
+  --text-dark: #202124;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+@layer components {
+  /* Container spacing utilities */
+  .container-spacing {
+    @apply px-4 sm:px-6 lg:px-8;
+  }
+
+  /* Section padding utilities */
+  .section-padding {
+    @apply py-12 md:py-16 lg:py-20;
+  }
+
+  .section-padding-md {
+    @apply py-8 md:py-12;
+  }
+
+  /* Card base styles */
+  .card-base {
+    @apply bg-white dark:bg-gray-800 rounded-lg shadow-md border border-gray-200 dark:border-gray-700;
+  }
+
+  .card-hover {
+    @apply hover:shadow-xl transition-all duration-300;
+  }
+
+  /* Interactive element base */
+  .interactive-base {
+    @apply transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary-blue focus:ring-offset-2 dark:focus:ring-offset-gray-900;
+  }
+
+  /* Button primary style */
+  .btn-primary {
+    @apply bg-primary-blue dark:bg-blue-600 text-white font-semibold px-6 py-3 rounded-lg hover:bg-blue-600 dark:hover:bg-blue-700 shadow-md hover:shadow-lg;
+  }
+}

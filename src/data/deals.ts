@@ -1,0 +1,88 @@
+import type { Deal } from '../types/flight'
+
+export const featuredDeals: Deal[] = [
+  {
+    id: '1',
+    origin: 'New York',
+    destination: 'Paris',
+    originalPrice: 750,
+    discountedPrice: 450,
+    savings: 300,
+    savingsPercent: 40,
+    airline: 'Multiple Airlines',
+    image:
+      'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=800&auto=format&fit=crop',
+    validUntil: '2024-12-31',
+    category: 'best-savings',
+  },
+  {
+    id: '2',
+    origin: 'Los Angeles',
+    destination: 'Tokyo',
+    originalPrice: 950,
+    discountedPrice: 650,
+    savings: 300,
+    savingsPercent: 32,
+    airline: 'Multiple Airlines',
+    image:
+      'https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=800&auto=format&fit=crop',
+    validUntil: '2024-12-15',
+    category: 'seasonal',
+  },
+  {
+    id: '3',
+    origin: 'Chicago',
+    destination: 'London',
+    originalPrice: 680,
+    discountedPrice: 420,
+    savings: 260,
+    savingsPercent: 38,
+    airline: 'Multiple Airlines',
+    image:
+      'https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=800&auto=format&fit=crop',
+    validUntil: '2024-11-30',
+    category: 'last-minute',
+  },
+  {
+    id: '4',
+    origin: 'Miami',
+    destination: 'Barcelona',
+    originalPrice: 720,
+    discountedPrice: 480,
+    savings: 240,
+    savingsPercent: 33,
+    airline: 'Multiple Airlines',
+    image:
+      'https://images.unsplash.com/photo-1539037116277-4db20889f2d4?w=800&auto=format&fit=crop',
+    validUntil: '2024-12-20',
+    category: 'weekend',
+  },
+  {
+    id: '5',
+    origin: 'San Francisco',
+    destination: 'Dubai',
+    originalPrice: 1100,
+    discountedPrice: 799,
+    savings: 301,
+    savingsPercent: 27,
+    airline: 'Multiple Airlines',
+    image:
+      'https://images.unsplash.com/photo-1512453979798-5e266bb771bc?w=800&auto=format&fit=crop',
+    validUntil: '2024-12-25',
+    category: 'best-savings',
+  },
+  {
+    id: '6',
+    origin: 'Boston',
+    destination: 'Rome',
+    originalPrice: 890,
+    discountedPrice: 590,
+    savings: 300,
+    savingsPercent: 34,
+    airline: 'Multiple Airlines',
+    image:
+      'https://images.unsplash.com/photo-1529260830199-42c24126f198?w=800&auto=format&fit=crop',
+    validUntil: '2024-12-10',
+    category: 'last-minute',
+  },
+]
