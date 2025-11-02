@@ -41,8 +41,8 @@ function App() {
               <main className="flex-1">
                 <Suspense
                   fallback={
-                    <div className="flex items-center justify-center min-h-screen">
-                      <Loader size="lg" message="Loading page..." />
+                    <div className="flex items-center justify-center min-h-[60vh]">
+                      <Loader size="lg" message="Loading..." />
                     </div>
                   }
                 >

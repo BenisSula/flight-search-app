@@ -1,74 +1,161 @@
 # 🛫 Flight Picker App
 
-A modern, responsive flight search application built with React, TypeScript, and Vite.
+A modern, production-ready flight search application built with React 19, TypeScript, and Vite. Search flights with smart autocomplete, advanced filters, interactive price calendars, and fully responsive design.
 
-## 📸 Screenshots
-
-![Home Page](https://github.com/BenisSula/flight-picker-app/blob/main/screenshots/home-page.png?raw=true)
-
-_Add more application screenshots here_
+![Deployment](https://img.shields.io/badge/deployment-vercel-black?style=for-the-badge&logo=vercel)
+![TypeScript](https://img.shields.io/badge/typescript-5.0+-blue?style=for-the-badge&logo=typescript)
+![React](https://img.shields.io/badge/react-19.1+-blue?style=for-the-badge&logo=react)
+![License](https://img.shields.io/badge/license-MIT-green?style=for-the-badge)
 
 ## ✨ Features
 
-- 🔍 **Flight Search** - Search flights by origin, destination, and dates
-- 🎯 **Autocomplete** - Smart airport autocomplete with IATA codes
-- 📊 **Price Calendar** - Interactive price calendar showing fare trends
-- 🎛️ **Advanced Filters** - Filter by price, stops, airline, departure times
-- 📱 **Responsive Design** - Works seamlessly on desktop, tablet, and mobile
+- 🔍 **Smart Flight Search** - Search by origin, destination, dates with intelligent autocomplete
+- 📊 **Price Calendar** - Interactive calendar showing fare trends by date
+- 🎛️ **Advanced Filters** - Filter by price range, stops, airlines, departure/arrival times
+- 🧭 **Nearby Airports** - Automatic geolocation to find airports near you
+- 📱 **Fully Responsive** - Seamless experience on desktop, tablet, and mobile (320px-1920px+)
+- ⚡ **Optimized Performance** - Code splitting, lazy loading, 94KB production bundle
 - 🌙 **Dark Mode** - Automatic dark mode support
-- ⚡ **Fast Performance** - Built with React 19 and optimized with lazy loading
+- ♿ **Accessible** - WCAG 2.1 AA compliant with keyboard navigation
+- 🔄 **Graceful Degradation** - Automatic fallback to mock data when API unavailable
+- 🎯 **Type-Safe** - Full TypeScript coverage with zero `any` types
 
-## 🚀 Getting Started
+## 🚀 Quick Start
 
 ### Prerequisites
 
-- Node.js 18+ and npm
+- **Node.js** 18+ and **npm**
 
 ### Installation
 
-1. Clone the repository
-2. Install dependencies:
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/BenisSula/flight-search-app.git
+   cd flight-search-app
+   ```
+
+2. **Install dependencies**
    ```bash
    npm install
    ```
 
-3. Set up environment variables (optional):
+3. **Set up environment variables** (optional)
+   
    Create a `.env` file in the root directory:
-   ```
+   ```env
    VITE_RAPIDAPI_KEY=your_api_key_here
    ```
    
-   **Note:** If no API key is configured, the app will automatically use mock data for development purposes.
+   > **Note:** Without an API key, the app automatically uses mock data for development.
 
-4. Start the development server:
+4. **Start development server**
    ```bash
    npm run dev
    ```
 
-5. Open [http://localhost:5173](http://localhost:5173) in your browser
+5. **Open in browser**
+   
+   Visit [http://localhost:5173](http://localhost:5173)
 
 ## 🌐 Deployment
 
 ### Vercel (Recommended)
 
-Deploy to Vercel in minutes:
+Deploy in minutes with zero configuration:
 
-1. Import your repository from GitHub:
+1. **Import from GitHub**
    - Go to [vercel.com](https://vercel.com)
    - Click "Add New Project"
-   - Import `BenisSula/flight-picker-app` from GitHub
-   - **Do not** create a new Vercel Git repository
-   
-2. Configure environment variables (optional):
-   ```
-   VITE_RAPIDAPI_KEY=your_api_key_here
-   ```
+   - Import from GitHub: `BenisSula/flight-search-app`
 
-3. Deploy! Vercel will auto-detect your Vite settings.
+2. **Add environment variables** (optional)
+   - Settings → Environment Variables
+   - Add: `VITE_RAPIDAPI_KEY=your_api_key_here`
+   - Environment: Production
 
-The app will be live at `https://your-project.vercel.app`
+3. **Deploy**
+   - Vercel auto-detects Vite settings
+   - Deploys instantly on every push to `main`
 
-**Note:** If you encounter the "name already used" error in Vercel, simply import from GitHub directly without creating a new Git repository on Vercel.
+**Live Demo:** [https://flight-search-app-steel.vercel.app](https://flight-search-app-steel.vercel.app)
+
+## 🔑 API Configuration
+
+This app uses the [Sky-Scrapper API](https://rapidapi.com/hub/sky-scrapper) via RapidAPI for flight data.
+
+### Setting Up RapidAPI
+
+1. **Create account**
+   - Sign up at [RapidAPI](https://rapidapi.com)
+
+2. **Subscribe to API**
+   - Navigate to [Sky-Scrapper API](https://rapidapi.com/hub/sky-scrapper)
+   - Choose a plan (Free tier: 500 requests/month)
+
+3. **Get API key**
+   - Copy your API key from RapidAPI Dashboard
+
+4. **Configure**
+   - Add to `.env` for local development
+   - Add to Vercel for production deployment
+
+### API Fallback System
+
+The app includes intelligent fallback:
+- ✅ **With API key**: Real-time flight data from RapidAPI
+- ✅ **Without API key**: Mock data for development/testing
+- ✅ **Rate limited**: Automatic fallback to mock data
+- ✅ **Network issues**: Graceful degradation with cached results
+
+**Result:** App always works, even without API! 🎉
+
+## 📁 Project Structure
+
+```
+flight-picker-app/
+├── src/
+│   ├── components/          # Reusable UI components
+│   │   ├── common/         # Buttons, Inputs, Loaders, etc.
+│   │   ├── layout/         # Navbar, Footer
+│   │   └── features/       # Feature-specific components
+│   ├── context/            # React Context providers
+│   │   ├── SearchContext   # Flight search state
+│   │   └── AppStatusContext # API status
+│   ├── data/               # Static data (deals, destinations)
+│   ├── features/           # Feature modules
+│   │   ├── results/        # Results page components
+│   │   └── search/         # Search form components
+│   ├── hooks/              # Custom React hooks
+│   │   ├── useDebounce
+│   │   ├── useGeolocation
+│   │   └── useStrictModeDeduplication
+│   ├── pages/              # Route pages
+│   │   ├── Home
+│   │   ├── Results
+│   │   ├── FlightDetails
+│   │   └── Deals
+│   ├── services/           # API integration
+│   │   └── flightApi.ts    # RapidAPI service
+│   ├── types/              # TypeScript definitions
+│   │   ├── flight.ts
+│   │   ├── airport.ts
+│   │   └── api.ts
+│   └── utils/              # Utility functions
+│       ├── apiStatus.ts    # Health checks with caching
+│       ├── envConfig.ts    # Environment config
+│       ├── withMockFallback.ts # Fallback utilities
+│       ├── apiRetry.ts     # Retry logic
+│       ├── handleApiError.ts
+│       └── logger.ts       # Structured logging
+├── public/                 # Static assets
+├── docs/                   # Documentation
+│   ├── troubleshooting.md  # Common issues & fixes
+│   └── deployment-history.md
+├── .env.example           # Environment template
+├── vercel.json            # Vercel config
+├── package.json
+└── README.md
+```
 
 ## 🛠️ Available Scripts
 
@@ -77,205 +164,175 @@ The app will be live at `https://your-project.vercel.app`
 | `npm run dev` | Start development server |
 | `npm run build` | Build for production |
 | `npm run preview` | Preview production build |
-| `npm run lint` | Run ESLint |
-| `npm run lint:fix` | Fix ESLint errors automatically |
+| `npm run lint` | Run ESLint checks |
+| `npm run lint:fix` | Auto-fix ESLint errors |
 | `npm run format` | Format code with Prettier |
 | `npm run format:check` | Check code formatting |
-| `npm run type-check` | Run TypeScript type checking |
-| `npm run check` | Run type-check, lint, and format check |
-
-## 📁 Project Structure
-
-```
-src/
-├── components/          # Reusable UI components
-│   ├── common/         # Basic UI components (Button, Input, Loader, etc.)
-│   └── layout/         # Layout components (Navbar, Footer)
-├── context/            # React Context providers
-│   ├── SearchContext   # Flight search state management
-│   └── AppStatusContext # API connectivity status
-├── data/               # Static data (deals, destinations, mock flights)
-├── features/           # Feature-specific components
-│   ├── results/        # Results page components
-│   └── search/         # Search form components
-├── hooks/              # Custom React hooks
-│   ├── useDebounce     # Debounce input values
-│   ├── useGeolocation  # Browser geolocation
-│   └── useStrictModeDeduplication # Prevent duplicate calls
-├── pages/              # Page components (Home, Results, Details, Deals)
-├── services/           # API services and data fetching
-├── types/              # TypeScript type definitions
-│   ├── flight.ts       # Flight-related types
-│   ├── airport.ts      # Airport-related types
-│   └── api.ts          # API response types
-└── utils/              # Utility functions
-    ├── formatAirport   # Airport formatting utilities
-    ├── formatDate      # Date formatting utilities
-    ├── formatPrice     # Price formatting utilities
-    ├── calculatePriceRange # Price range calculation
-    ├── apiRetry        # API retry logic
-    ├── logger          # Structured logging utilities
-    ├── envConfig       # Environment configuration
-    ├── handleApiError  # Error handling utilities
-    └── withMockFallback # Mock data fallback utilities
-```
-
-## 🔑 API Configuration
-
-This app uses the Sky-Scrapper API via RapidAPI for flight data.
-
-### Setting Up API Keys
-
-1. Sign up at [RapidAPI](https://rapidapi.com)
-2. Subscribe to the Sky-Scrapper API
-3. Copy your API key
-4. Add it to your `.env` file:
-   ```
-   VITE_RAPIDAPI_KEY=your_api_key_here
-   ```
-
-### API Fallback
-
-If no API key is configured, the app automatically falls back to mock data, making it perfect for development and testing without API limits.
-
-## 🎨 Tech Stack
-
-- **Framework:** React 19 with TypeScript
-- **Build Tool:** Vite
-- **Styling:** Tailwind CSS
-- **Routing:** React Router v7
-- **HTTP Client:** Fetch API with retry logic
-- **State Management:** React Context API
-- **Notifications:** react-hot-toast
-- **Icons:** Lucide React
+| `npm run type-check` | Run TypeScript checks |
+| `npm run check` | Run all checks (type, lint, format) |
 
 ## 🏗️ Architecture Highlights
 
-### Code Organization
-- **Folder Structure:** Feature-based organization with separation of concerns
-- **Component Library:** Reusable UI components in `components/common/`
-- **Feature Modules:** Page-specific components grouped by feature
-- **Utility Functions:** Shared helpers for formatting, validation, and API calls
+### 🎯 Design Principles
 
-### State Management
-- **Context API:** Centralized state management for search and app status
-- **Custom Hooks:** Reusable logic (useDebounce, useGeolocation, useStrictModeDeduplication)
-- **Provider Pattern:** SearchProvider and AppStatusProvider wrap the app
+- **Modularity** - Feature-based organization
+- **Type Safety** - Full TypeScript coverage
+- **DRY** - Centralized utilities, no duplication
+- **Separation of Concerns** - Clear boundaries
+- **Error Resilience** - Graceful degradation
 
-### Data Flow
-- **API Integration:** Centralized API service with retry logic and fallback
-- **Mock Data:** Robust fallback system for development and testing
-- **Type Safety:** Full TypeScript coverage with runtime validation (Zod)
+### 🧩 Core Systems
 
-### Performance Optimization
-- **Lazy Loading:** Code splitting with React.lazy for all page routes
-- **Suspense Boundaries:** Loading states for async component loading
-- **Error Boundaries:** Graceful error recovery throughout the app
-- **Debouncing:** Reduced API calls with debounced search inputs
+#### State Management
+- **Context API** for global state
+- **Custom Hooks** for reusable logic
+- **Optimistic Updates** for better UX
 
-### Developer Experience
-- **TypeScript:** Strict type checking with zero `any` types
-- **Structured Logging:** Development-only logging with levels (debug, info, warn, error)
-- **Code Quality:** ESLint + Prettier for consistent code style
-- **Validation:** Runtime validation with Zod schemas
+#### API Integration
+- **Centralized Service** (`flightApi.ts`)
+- **Retry Logic** with exponential backoff
+- **Intelligent Caching** (5-minute cache)
+- **Mock Fallback** for development
+- **Error Handling** with structured logging
 
-## 📋 Development Conventions
+#### Performance Optimization
+- **Code Splitting** - Lazy loading all routes
+- **Bundle Size** - 94KB gzipped
+- **Debouncing** - Reduced API calls
+- **Memoization** - Prevent unnecessary renders
+
+### 🔒 Quality Assurance
+
+- ✅ **TypeScript** - Strict mode, zero `any` types
+- ✅ **ESLint** - Comprehensive linting rules
+- ✅ **Prettier** - Consistent code formatting
+- ✅ **Error Boundaries** - Graceful error recovery
+- ✅ **Accessibility** - WCAG 2.1 AA compliant
+- ✅ **Responsive** - Tested 320px-1920px+
+- ✅ **Cross-browser** - Modern browser support
+
+## 🎨 Tech Stack
+
+| Category | Technology |
+|----------|-----------|
+| **Framework** | React 19.1.1 |
+| **Language** | TypeScript 5.0+ |
+| **Build Tool** | Vite 7 |
+| **Styling** | Tailwind CSS |
+| **Routing** | React Router v7 |
+| **HTTP Client** | Fetch API |
+| **State Management** | React Context API |
+| **Validation** | Zod |
+| **Notifications** | react-hot-toast |
+| **Icons** | Lucide React |
+| **Deployment** | Vercel |
+
+## 📚 Development Guide
 
 ### Code Style
-- Use TypeScript strict mode
-- Prefer functional components with hooks
-- Follow Single Responsibility Principle
-- Use meaningful component and function names
-- Add JSDoc comments for complex functions
+
+- **Format**: Prettier configuration in `.prettierrc`
+- **Linting**: ESLint with `@eslint/js`
+- **Type Safety**: Strict TypeScript mode
+- **Comments**: JSDoc for complex functions
 
 ### Component Patterns
-- Extract reusable logic into custom hooks
-- Use composition over inheritance
-- Keep components small and focused
-- Leverage Context API for shared state
-- Implement error boundaries for resilience
+
+- Functional components with hooks
+- Composition over inheritance
+- Small, focused components
+- Clear prop interfaces
+- Extracted logic into custom hooks
 
 ### API Integration
-- Always use `withMockFallback` or `withFallback` utilities
-- Handle loading, error, and success states
-- Use retry logic with exponential backoff
-- Provide meaningful error messages to users
 
-### Accessibility Standards
-- Add ARIA labels to all interactive elements
-- Ensure keyboard navigation works everywhere
-- Maintain proper heading hierarchy
-- Use semantic HTML elements
-- Test with screen readers
+Always use centralized utilities:
+```typescript
+// ✅ Correct: Use withMockFallback
+const data = await withMockFallback(
+  () => apiCall(),
+  () => getMockData(),
+  'context-name'
+)
 
-## 🔍 Recent Improvements
+// ❌ Avoid: Direct try-catch
+try {
+  const data = await apiCall()
+} catch (error) {
+  return getMockData()
+}
+```
 
-### Phase 1: Duplicate Code Removal ✅
-- Removed redundant API key constants
-- Extracted price range calculation to shared utility
-- Created reusable StrictMode deduplication hook
-- Eliminated 100% of duplicate patterns
+### Best Practices
 
-### Phase 2: Type Safety Enhancement ✅
-- Created comprehensive API type definitions (8 interfaces)
-- Eliminated all 16 `any` types → 0
-- Removed all eslint-disable comments → 0
-- Full TypeScript strict mode enforcement
-- 100% type safety coverage
+- ✅ Always handle loading and error states
+- ✅ Use TypeScript types consistently
+- ✅ Add ARIA labels for accessibility
+- ✅ Implement keyboard navigation
+- ✅ Optimize images and assets
+- ✅ Write self-documenting code
 
-### Phase 3: Centralized Error Handling & Logging ✅
-- Created unified `logger.ts` utility with debug, info, warn, error levels
-- Replaced all console.log/error/warn with structured logging
-- Removed apiInspector.ts (consolidated into logger)
-- Logs only active in development mode
-- Clean, readable, context-rich logs
+## 🔍 Troubleshooting
 
-### Phase 4: Shared Mock Fallback Utility ✅
-- Created `withMockFallback<T>` and `withFallback<T>` utilities
-- Refactored 6 API functions to use standardized fallback pattern
-- Removed duplicate fallback logic across the codebase
-- Eliminated manual error handling patterns
-- Consistent, maintainable API error handling
+For common issues and detailed solutions, see **[Troubleshooting Guide](docs/troubleshooting.md)**
 
-### Phase 5: Custom Hooks for Deduplication ✅
-- Refactored 3 components to use `useStrictModeDeduplication` hook
-- Eliminated all duplicate StrictMode deduplication patterns
-- Removed 6 manual ref-based implementations
-- Centralized deduplication logic in reusable hook
-- Verified price range logic is properly extracted
+### Quick Fixes
 
-### Phase 6: Responsive Design Audit ✅
-- Audited all pages (Home, Results, FlightDetails, Deals)
-- Verified breakpoints: 320px, 768px, 1024px, 1440px, 1920px
-- Ensured proper Tailwind responsive utilities (sm:, md:, lg:)
-- Confirmed no overflow or clipping issues
-- Added responsive improvements to Results and FlightDetails pages
+**Offline Status?**
+- Check if `VITE_RAPIDAPI_KEY` is set in Vercel
+- Verify API key is valid in RapidAPI dashboard
+- Redeploy after changing environment variables
 
-### Phase 7: Accessibility, Validation & Error Boundaries ✅
-- Created ErrorBoundary component for graceful error recovery
-- Added ARIA labels (46+) and keyboard navigation throughout
-- Implemented Zod validation for all search inputs
-- Date logic, airport uniqueness, and cabin class validation
-- WCAG 2.1 AA compliant accessibility
+**Rate Limited?**
+- Free tier: 500 requests/month
+- Upgrade plan or wait for reset
+- App continues working with mock data
 
-### Phase 8: Final Performance & Production Audit ✅
-- Verified lazy loading for all page routes (code splitting)
-- Removed dead/commented code for cleaner production build
-- Optimized console output (dev-only logging)
-- Enhanced README with architecture & development conventions
-- Production bundle: 298KB → 94KB gzip (68% reduction)
+**Build Failing?**
+```bash
+npm run check  # Run all checks
+npm install    # Reinstall dependencies
+npm run build  # Test build locally
+```
 
-### Code Quality ✅
-- All linting and formatting checks passing
-- Zero TypeScript errors
-- Zero ESLint warnings
-- Production-ready build
-- Clean, maintainable architecture
+## 📈 Recent Improvements
+
+- ✅ **Phase 1**: Eliminated duplicate code patterns
+- ✅ **Phase 2**: Full TypeScript strict mode (0 `any` types)
+- ✅ **Phase 3**: Centralized logging and error handling
+- ✅ **Phase 4**: Shared mock fallback utilities
+- ✅ **Phase 5**: Custom hooks for deduplication
+- ✅ **Phase 6**: Responsive design audit (320px-1920px)
+- ✅ **Phase 7**: WCAG 2.1 AA accessibility compliance
+- ✅ **Phase 8**: Performance optimization (68% bundle reduction)
+- ✅ **Phase 9**: API health checks with intelligent caching
+
+See [docs/deployment-history.md](docs/deployment-history.md) for details.
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
 ## 📝 License
 
-MIT
+This project is licensed under the MIT License.
 
-## 👨‍💻 Contributing
+## 🙏 Acknowledgments
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+- [RapidAPI](https://rapidapi.com) for Sky-Scrapper API
+- [Vercel](https://vercel.com) for hosting platform
+- [React](https://react.dev) team for the amazing framework
+- [Tailwind CSS](https://tailwindcss.com) for utility-first styling
+- [Lucide](https://lucide.dev) for beautiful icons
+
+---
+
+**Built with ❤️ by Benis Sula**
+
+[Live Demo](https://flight-search-app-steel.vercel.app) • [GitHub](https://github.com/BenisSula/flight-search-app) • [Report Bug](https://github.com/BenisSula/flight-search-app/issues) • [Request Feature](https://github.com/BenisSula/flight-search-app/issues)
