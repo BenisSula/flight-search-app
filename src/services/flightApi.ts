@@ -66,16 +66,14 @@ async function apiRequest<T>(
   // Check if API key exists before making request
   if (!RAPID_API_KEY) {
     const error = new Error(
-      'API key is not configured. Please set VITE_RAPID_API_KEY in your .env file. The app will use mock data for development.'
+      'API key is not configured. Please set VITE_RAPIDAPI_KEY in your .env file. The app will use mock data for development.'
     )
     error.name = 'NoApiKeyError'
     throw error
   }
 
-  // Ensure endpoint starts with /api if not already present
-  const apiEndpoint = endpoint.startsWith('/api/')
-    ? endpoint
-    : `/api${endpoint.startsWith('/') ? '' : '/'}${endpoint}`
+  // Ensure endpoint starts with / if not already present
+  const apiEndpoint = endpoint.startsWith('/') ? endpoint : `/${endpoint}`
   const url = new URL(`${RAPID_API_BASE_URL}${apiEndpoint}`)
 
   // Add query parameters if provided

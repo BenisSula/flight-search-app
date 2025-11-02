@@ -51,46 +51,47 @@ export function AppStatusProvider({ children }: { children: ReactNode }) {
 
   // Initial health check on mount
   useEffect(() => {
-    // Disable health checks in development to avoid rate limits
-    // Health checks are mainly for production monitoring
-    // In dev, we can use mock data when API is unavailable
-    if (import.meta.env.PROD) {
-      // Run regular health check (will handle rate limits gracefully)
-      refreshHealth()
-
-      // Set up periodic health checks every 30 minutes (increased to avoid rate limits)
-      // Skip if already offline due to rate limit
-      const interval = setInterval(
-        () => {
-          // Only check if not offline due to rate limit
-          setHealth(currentHealth => {
-            if (
-              currentHealth.isOnline === false &&
-              currentHealth.message &&
-              (currentHealth.message.includes('Rate limit exceeded') ||
-                currentHealth.message.includes('429'))
-            ) {
-              // Don't check again if rate limited - wait until next hour/reset
-              // Skip this check completely to avoid hitting rate limits again
-              return currentHealth
-            }
-            refreshHealth()
-            return currentHealth
-          })
-        },
-        30 * 60 * 1000
-      ) // 30 minutes (increased from 10 to significantly reduce API calls)
-
-      return () => clearInterval(interval)
-    } else {
-      // In development, skip health checks and assume online
-      // This prevents hitting rate limits during development
+    // In development, skip health checks and assume online
+    // This prevents hitting rate limits during development
+    // In production, perform health checks to monitor API connectivity
+    if (!import.meta.env.PROD) {
+      // Development mode: assume online
       setHealth({
         isOnline: true,
         timestamp: Date.now(),
         message: 'Development mode - health checks disabled',
       })
+      return
     }
+
+    // Production mode: run health checks
+    // Run regular health check (will handle rate limits gracefully)
+    refreshHealth()
+
+    // Set up periodic health checks every 30 minutes (increased to avoid rate limits)
+    // Skip if already offline due to rate limit
+    const interval = setInterval(
+      () => {
+        // Only check if not offline due to rate limit
+        setHealth(currentHealth => {
+          if (
+            currentHealth.isOnline === false &&
+            currentHealth.message &&
+            (currentHealth.message.includes('Rate limit exceeded') ||
+              currentHealth.message.includes('429'))
+          ) {
+            // Don't check again if rate limited - wait until next hour/reset
+            // Skip this check completely to avoid hitting rate limits again
+            return currentHealth
+          }
+          refreshHealth()
+          return currentHealth
+        })
+      },
+      30 * 60 * 1000
+    ) // 30 minutes (increased from 10 to significantly reduce API calls)
+
+    return () => clearInterval(interval)
   }, [refreshHealth])
 
   // Initial config fetch

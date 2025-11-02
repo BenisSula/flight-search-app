@@ -11,7 +11,7 @@ export const featuredDeals: Deal[] = [
     savingsPercent: 40,
     airline: 'Multiple Airlines',
     image:
-      'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=800&q=80&auto=format&fit=crop',
     validUntil: '2024-12-31',
     category: 'best-savings',
   },
@@ -25,7 +25,7 @@ export const featuredDeals: Deal[] = [
     savingsPercent: 32,
     airline: 'Multiple Airlines',
     image:
-      'https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=800&q=80&auto=format&fit=crop',
     validUntil: '2024-12-15',
     category: 'seasonal',
   },
@@ -39,7 +39,7 @@ export const featuredDeals: Deal[] = [
     savingsPercent: 38,
     airline: 'Multiple Airlines',
     image:
-      'https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=800&q=80&auto=format&fit=crop',
     validUntil: '2024-11-30',
     category: 'last-minute',
   },
@@ -53,7 +53,7 @@ export const featuredDeals: Deal[] = [
     savingsPercent: 33,
     airline: 'Multiple Airlines',
     image:
-      'https://images.unsplash.com/photo-1539037116277-4db20889f2d4?w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1539037116277-4db20889f2d4?w=800&q=80&auto=format&fit=crop',
     validUntil: '2024-12-20',
     category: 'weekend',
   },
@@ -67,7 +67,7 @@ export const featuredDeals: Deal[] = [
     savingsPercent: 27,
     airline: 'Multiple Airlines',
     image:
-      'https://images.unsplash.com/photo-1512453979798-5e266bb771bc?w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1512453979798-5e266bb771bc?w=800&q=80&auto=format&fit=crop',
     validUntil: '2024-12-25',
     category: 'best-savings',
   },
@@ -81,7 +81,7 @@ export const featuredDeals: Deal[] = [
     savingsPercent: 34,
     airline: 'Multiple Airlines',
     image:
-      'https://images.unsplash.com/photo-1529260830199-42c24126f198?w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1529260830199-42c24126f198?w=800&q=80&auto=format&fit=crop',
     validUntil: '2024-12-10',
     category: 'last-minute',
   },
