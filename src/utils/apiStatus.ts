@@ -171,11 +171,3 @@ export function isUsingMockData(): boolean {
   return cachedHealthCheck?.usingMockData || !RAPID_API_KEY
 }
 
-/**
- * Check if API key is configured
- * @returns true if API key exists, false otherwise
- */
-export function isApiKeyConfigured(): boolean {
-  return !!RAPID_API_KEY && RAPID_API_KEY.trim() !== ''
-}
-
